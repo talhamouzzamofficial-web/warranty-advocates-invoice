@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invoice — Warranty Advocates LLC</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1E3A8A;
+    --cyan: #22B0D8;
+    --cyan-light: #E8F7FC;
+    --red-soft: #FFF0F0;
+    --green-soft: #F0FBF4;
+    --gray-1: #F8F9FC;
+    --gray-2: #EAECF3;
+    --gray-3: #9AA3B8;
+    --text: #1A2340;
+    --text-soft: #5A6480;
+  }
+
+  body {
+    background: #F0F3FA;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 40px rgba(30,58,138,0.10);
+    overflow: hidden;
+  }
+
+  /* ── HEADER BAND ── */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #2a52c9 100%);
+    padding: 40px 48px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(34,176,216,0.15);
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    right: 60px; bottom: -60px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(34,176,216,0.08);
+  }
+  .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .brand-sub {
+    font-size: 12px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+  .invoice-badge {
+    position: absolute;
+    top: 40px; right: 48px;
+    text-align: right;
+  }
+  .invoice-badge .label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .invoice-badge .inv-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  /* ── META ROW ── */
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--gray-2);
+  }
+  .meta-cell {
+    padding: 22px 28px;
+    border-right: 1px solid var(--gray-2);
+  }
+  .meta-cell:last-child { border-right: none; }
+  .meta-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-3);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .meta-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .meta-value.cyan { color: var(--cyan); }
+
+  /* ── PARTIES ── */
+  .parties {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 28px 28px 0;
+  }
+  .party { padding: 0 20px 28px; }
+  .party:first-child { border-right: 1px solid var(--gray-2); padding-left: 0; }
+  .party-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-3);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .party-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .party-detail {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+
+  /* ── TABLE ── */
+  .table-wrap { padding: 0 28px 28px; }
+  .section-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gray-3);
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 14px;
+  }
+  thead tr {
+    background: var(--navy);
+    color: #fff;
+  }
+  thead th {
+    padding: 13px 18px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 600;
+  }
+  thead th:last-child { text-align: right; }
+
+  tbody tr { border-bottom: 1px solid var(--gray-2); }
+  tbody tr:nth-child(even) { background: var(--gray-1); }
+  tbody td { padding: 14px 18px; }
+  tbody td:last-child { text-align: right; font-weight: 600; }
+  .item-name { font-weight: 500; }
+  .item-desc { font-size: 12px; color: var(--text-soft); margin-top: 2px; }
+
+  .row-damages td { background: var(--red-soft) !important; }
+  .row-damages .item-name { color: #C0392B; }
+  .row-damages td:last-child { color: #C0392B; }
+
+  .row-wa td { background: #EEF2FF !important; }
+  .row-wa .item-name { color: var(--navy); }
+
+  .row-subtotal td {
+    background: var(--green-soft) !important;
+    font-weight: 700;
+    color: #1A6B3A;
+    border-top: 2px solid #A8E6BE;
+  }
+
+  .row-total td {
+    background: var(--navy) !important;
+    color: #fff !important;
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  /* ── TOTAL BOX ── */
+  .total-box {
+    margin: 0 28px 28px;
+    background: linear-gradient(135deg, var(--navy), #2a52c9);
+    border-radius: 14px;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .total-box .tl { color: rgba(255,255,255,0.7); font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; }
+  .total-box .ta { font-family: 'Playfair Display', serif; font-size: 36px; color: #fff; font-weight: 700; }
+  .total-box .ts { font-size: 12px; color: var(--cyan); margin-top: 2px; }
+
+  /* ── PAY BUTTON ── */
+  .pay-section {
+    padding: 0 28px 40px;
+    text-align: center;
+  }
+  .pay-btn {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--cyan) 0%, #1a9fc4 100%);
+    color: #fff;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    padding: 18px 60px;
+    border-radius: 50px;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 30px rgba(34,176,216,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .pay-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+  }
+  .pay-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(34,176,216,0.45);
+  }
+  .pay-btn:active { transform: translateY(0); }
+  .pay-note {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--gray-3);
+  }
+  .pay-note span { color: var(--cyan); font-weight: 500; }
+
+  /* ── FOOTER ── */
+  .footer {
+    border-top: 1px solid var(--gray-2);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-brand { font-size: 12px; color: var(--gray-3); }
+  .footer-brand strong { color: var(--navy); }
+  .footer-note { font-size: 11px; color: var(--gray-3); text-align: right; }
+
+  @media (max-width: 600px) {
+    .header { padding: 28px 24px; }
+    .invoice-badge { position: static; margin-top: 16px; text-align: left; }
+    .meta { grid-template-columns: 1fr; }
+    .meta-cell { border-right: none; border-bottom: 1px solid var(--gray-2); padding: 16px 20px; }
+    .parties { grid-template-columns: 1fr; padding: 20px 20px 0; }
+    .party:first-child { border-right: none; border-bottom: 1px solid var(--gray-2); padding: 0 0 20px; }
+    .party { padding: 20px 0; }
+    .table-wrap, .total-box, .pay-section, .footer { padding-left: 20px; padding-right: 20px; }
+    .total-box { flex-direction: column; gap: 8px; text-align: center; }
+    .ta { font-size: 28px !important; }
+    table { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="card">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="brand">Warranty Advocates LLC</div>
+      <div class="brand-sub">Consumer Advocacy Services</div>
+      <div class="invoice-badge">
+        <div class="label">Invoice</div>
+        <div class="inv-num">#WA-2026-001</div>
+      </div>
+    </div>
+
+    <!-- META -->
+    <div class="meta">
+      <div class="meta-cell">
+        <div class="meta-label">Issue Date</div>
+        <div class="meta-value" id="issue-date">—</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Due Date</div>
+        <div class="meta-value" id="due-date">—</div>
+      </div>
+      <div class="meta-cell">
+        <div class="meta-label">Status</div>
+        <div class="meta-value cyan">⬤ &nbsp;Payment Pending</div>
+      </div>
+    </div>
+
+    <!-- PARTIES -->
+    <div class="parties">
+      <div class="party">
+        <div class="party-label">Billed To</div>
+        <div class="party-name">Maxxon Buick GMC</div>
+        <div class="party-detail">
+          Finance Manager: Terry Martone<br>
+          New Jersey, USA
+        </div>
+      </div>
+      <div class="party" style="padding-right:0;">
+        <div class="party-label">Facilitated By</div>
+        <div class="party-name">Warranty Advocates LLC</div>
+        <div class="party-detail">
+          On behalf of: Fajah Brown<br>
+          Consumer Advocacy Division
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-wrap">
+      <div class="section-title">Settlement Breakdown</div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width:55%">Description</th>
+            <th style="width:25%">Category</th>
+            <th style="width:20%">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="item-name">IAS Millennium Service Contract</div>
+              <div class="item-desc">Extended Warranty — added without consent</div>
+            </td>
+            <td>Product Refund</td>
+            <td>$2,349.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-name">Optional Security Package</div>
+              <div class="item-desc">Added without customer request</div>
+            </td>
+            <td>Product Refund</td>
+            <td>$389.00</td>
+          </tr>
+          <tr>
+            <td>
+              <div class="item-name">GAP Insurance</div>
+              <div class="item-desc">Customer explicitly declined</div>
+            </td>
+            <td>Product Refund</td>
+            <td>$1,000.00</td>
+          </tr>
+          <tr class="row-damages">
+            <td>
+              <div class="item-name">Consumer Harm Damages</div>
+              <div class="item-desc">Compensation for unauthorized charges</div>
+            </td>
+            <td>Damages</td>
+            <td>$3,738.00</td>
+          </tr>
+          <tr class="row-subtotal">
+            <td colspan="2"><strong>Customer Settlement Total (Fajah Brown)</strong></td>
+            <td>$7,476.00</td>
+          </tr>
+          <tr class="row-wa">
+            <td>
+              <div class="item-name">Warranty Advocates LLC — Advocacy Fee</div>
+              <div class="item-desc">Sole responsibility of Dealership — not deducted from customer amount</div>
+            </td>
+            <td>Service Fee</td>
+            <td>$748.00</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TOTAL BOX -->
+    <div class="total-box">
+      <div>
+        <div class="tl">Total Dealership Obligation</div>
+        <div class="ts">Inclusive of all refunds, damages & advocacy fee</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="ta">$8,224.00</div>
+      </div>
+    </div>
+
+    <!-- PAY BUTTON -->
+    <div class="pay-section">
+      <a href="https://buy.stripe.com/4gM9AU5BtbGweHL2B32B200" class="pay-btn" target="_blank">
+        🔒 &nbsp; Pay Now — $8,224.00
+      </a>
+      <div class="pay-note">Secure payment powered by <span>Stripe</span> &nbsp;·&nbsp; All major cards accepted</div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <div class="footer-brand"><strong>Warranty Advocates LLC</strong> · Consumer Advocacy Services</div>
+      <div class="footer-note">This invoice is for settlement purposes only<br>and does not constitute legal advice.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const today = new Date();
+  const due = new Date(today);
+  due.setDate(due.getDate() + 7);
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  document.getElementById('issue-date').textContent = fmt(today);
+  document.getElementById('due-date').textContent = fmt(due);
+</script>
+</body>
+</html>
